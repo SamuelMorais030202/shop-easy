@@ -12,6 +12,12 @@ export const useCart = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (cart.length > 0) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart]);
+
   const addToCart = (product: IProduct) => {
     const newCart = [...cart, product];
     setCart(newCart);

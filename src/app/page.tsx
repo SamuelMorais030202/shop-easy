@@ -12,13 +12,11 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 export default function Home() {
   const [search, setSearch] = useState("");
   const { products, error, isLoading } = useProducts(search);
-  const { addToCart } = useCart();
-
-  console.log(products)
+  const { addToCart, cart } = useCart();
 
   return (
     <div>
-      <Header />
+      <Header cartLength={cart.length} />
 
       <section className="flex justify-between gap-2 px-6 mt-6">
         <header>
