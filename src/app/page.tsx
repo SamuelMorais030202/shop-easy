@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { Header } from "@/components/header"
-import { X, Search } from "lucide-react";
+import { X, Search, ShoppingCart, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProducts } from "@/hooks/useProducts";
 import { useCart } from "@/hooks/useCart";
@@ -12,7 +12,11 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 export default function Home() {
   const [search, setSearch] = useState("");
   const { products, error, isLoading } = useProducts(search);
-  const { addToCart, cart } = useCart();
+  const { addToCart, cart, removeFromCart } = useCart();
+
+  const isProductInCart = (productId: string) => {
+    return cart.some((product) => product.id === productId);
+  };
 
   return (
     <div>
@@ -70,12 +74,23 @@ export default function Home() {
                 }).format(Number(product.price))}
               </strong>
 
-              <Button
-                onClick={() => addToCart(product)}
-                className="mt-4 w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-primary"
-              >
-                Adicionar ao Carrinho
-              </Button>
+              {isProductInCart(product.id) ? (
+                <Button
+                  onClick={() => removeFromCart(product.id)}
+                  className="mt-4 w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-red-500"
+                >
+                  <TrashIcon />
+                  Remove from Cart
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => addToCart(product)}
+                  className="mt-4 w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  <ShoppingCart className="size-4" />
+                  Add to Cart
+                </Button>
+              )}
             </Card>
           ))}
         </div>

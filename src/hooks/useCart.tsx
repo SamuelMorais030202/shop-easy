@@ -24,8 +24,8 @@ export const useCart = () => {
 
     localStorage.setItem("cart", JSON.stringify(newCart));
 
-    toast.success(`${product.name} foi adicionado ao carrinho!`, {
-      autoClose: 3000, // O toast ficará visível por 3 segundos
+    toast.success(`${product.name} has been added to cart!`, {
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -37,6 +37,14 @@ export const useCart = () => {
     const newCart = cart.filter((product) => product.id !== productId);
     setCart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
+
+    toast.error('Product removed from cart', {
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   return {
