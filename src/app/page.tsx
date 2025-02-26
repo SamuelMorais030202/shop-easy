@@ -1,13 +1,20 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 
 import { Header } from "@/components/header"
 import { X, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useProducts } from "@/hooks/useProducts";
+import { useCart } from "@/hooks/useCart";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 
 export default function Home() {
   const [search, setSearch] = useState("");
+  const { products, error, isLoading } = useProducts(search);
+  const { addToCart } = useCart();
+
+  console.log(products)
 
   return (
     <div>
@@ -41,6 +48,38 @@ export default function Home() {
           <Button className="px-4 py-2 text-white bg-primary rounded-lg hover:bg-primary/80">
             <Search size={20} />
           </Button>
+        </div>
+      </section>
+
+      <section className="px-6 my-6">
+        {isLoading && <p>Loading products...</p>}
+        {error && <p className="text-red-500">{error}</p>}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <Card key={product.id} className="border p-4 rounded-lg shadow">
+              <img 
+                src={product.image} 
+                alt={product.name} 
+                className="w-full h-40 object-cover rounded-md"
+              />
+              <CardTitle className="text-lg font-semibold mt-2">{product.name}</CardTitle>
+              <CardDescription className="text-sm text-gray-600">{product.detail}</CardDescription>
+              <strong className="text-lg text-primary">
+                {new Intl.NumberFormat('en-US', {
+                  style: 'currency',
+                  currency: 'USD',
+                }).format(Number(product.price))}
+              </strong>
+
+              <Button
+                onClick={() => addToCart(product)}
+                className="mt-4 w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                Adicionar ao Carrinho
+              </Button>
+            </Card>
+          ))}
         </div>
       </section>
     </div>
