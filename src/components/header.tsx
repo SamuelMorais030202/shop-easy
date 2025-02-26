@@ -4,7 +4,7 @@ import { ShoppingCart } from "lucide-react";
 export function Header() {
   return (
     <header className="border-b">
-      <div className="flex h-16 items-center gap-6 px-7">
+      <div className="flex h-16 items-center px-6">
         <h3>
           ShopEasy
         </h3>
