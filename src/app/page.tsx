@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <div>
-      <Header cartLength={cart.length} />
+      <Header cartItems={cart} removeFromCart={removeFromCart} />
 
       <section className="flex justify-between gap-2 px-6 mt-6">
         <header>
