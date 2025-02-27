@@ -1,16 +1,12 @@
 import { ModeToggle } from "./theme/model-toggle";
 import { ShoppingCart, Trash } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
-import { IProduct } from "@/hooks/useProducts";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
+import { useCartContext } from "@/contexts/cart-context";
 
-interface IHeaderProps {
-  cartItems: IProduct[];
-  removeFromCart: (productId: string) => void;
-}
-
-export function Header({ cartItems, removeFromCart }: IHeaderProps) {
+export function Header() {
+  const { cart: cartItems, removeFromCart } = useCartContext();
 
   return (
     <header className="border-b">
