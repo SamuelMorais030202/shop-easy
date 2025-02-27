@@ -64,6 +64,7 @@ export default function Home() {
                 src={product.image} 
                 alt={product.name} 
                 className="w-full h-40 object-cover rounded-md"
+                onError={(e) => (e.currentTarget.src = "/image-default.png")}
               />
               <CardTitle className="text-lg font-semibold mt-2">{product.name}</CardTitle>
               <CardDescription className="text-sm text-gray-600">{product.detail}</CardDescription>
