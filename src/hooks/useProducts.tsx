@@ -13,7 +13,7 @@ export interface IProduct {
   offer?: string;
 }
 
-export function useProducts(search: string) {
+export function useProducts() {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,11 +21,7 @@ export function useProducts(search: string) {
   const fetchProducts = async () => {
     setIsLoading(true);
     try {
-      const response = await api.get('products', {
-        params: {
-          q: search
-        },
-      });
+      const response = await api.get('products');
   
       setProducts(response.data);
 
@@ -39,7 +35,7 @@ export function useProducts(search: string) {
 
   useEffect(() => {
     fetchProducts();
-  }, [search]);
+  }, []);
 
   return { products, isLoading, error };
 }

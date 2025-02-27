@@ -35,7 +35,7 @@ export function Header({ cartItems, removeFromCart }: IHeaderProps) {
             </DialogTrigger>
 
             <DialogContent className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl w-full">
-              <DialogTitle>Seu Carrinho</DialogTitle>
+              <DialogTitle>Your Cart</DialogTitle>
               <div className="mt-4 max-h-80 overflow-y-auto space-y-2 custom-scrollbar pr-3">
                 {cartItems.length > 0 ? (
                   <div className="mt-4 space-y-2">
@@ -71,7 +71,7 @@ export function Header({ cartItems, removeFromCart }: IHeaderProps) {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-500 mt-4">Seu carrinho está vazio.</p>
+                  <p className="text-gray-500 mt-4">Your cart is empty.</p>
                 )}
               </div>
             </DialogContent>

@@ -11,23 +11,27 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 
 export default function Home() {
   const [search, setSearch] = useState("");
-  const { products, error, isLoading } = useProducts(search);
+  const { products, error, isLoading } = useProducts();
   const { addToCart, cart, removeFromCart } = useCart();
 
   const isProductInCart = (productId: string) => {
     return cart.some((product) => product.id === productId);
   };
 
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div>
       <Header cartItems={cart} removeFromCart={removeFromCart} />
 
-      <section className="flex justify-between gap-2 px-6 mt-6">
-        <header>
+      <section className="flex justify-between flex-wrap gap-2 px-6 mt-6">
+        <div>
           <h3 className="text-xl font-semibold text-foreground">
             Products:
           </h3>
-        </header>
+        </div>
 
         <div className="relative flex items-center gap-2">
           <input
@@ -55,10 +59,14 @@ export default function Home() {
 
       <section className="px-6 my-6">
         {isLoading && <p>Loading products...</p>}
-        {error && <p className="text-red-500">{error}</p>}
+        {filteredProducts.length === 0 && !isLoading && !error && (
+          <p className="text-center text-muted-foreground text-lg mt-10">
+            No products found.
+          </p>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <Card key={product.id} className="border p-4 rounded-lg shadow">
               <img 
                 src={product.image} 
